@@ -21,6 +21,7 @@ public class Driver {
 //		CodeMaker-pins
 		String black = "Black";
 		String white = "White";
+		String empty = "Empty";
 		
 //		CodeMaker-Row+Holes
 		String codeMakerHole1 = "";
