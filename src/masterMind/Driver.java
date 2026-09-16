@@ -1,8 +1,12 @@
 package masterMind;
 
+import java.util.Scanner;
+
 public class Driver {
 
 	public static void main(String[] args) {
+//===================================
+        Scanner sc = new Scanner(System.in);
 //===================================		
 //		Codebreaker-pins
 		String green = "Green";
@@ -42,7 +46,25 @@ public class Driver {
 		secretCodeField3 = red;
 		secretCodeField4 = blue;
 		
-		
+		System.out.println("Choose a color that you want to place in hole 1:");
+		codeBreakerHole1 = sc.next();
+//		System.out.println(codeBreakerHole1);
+			if (codeBreakerHole1.equalsIgnoreCase(secretCodeField1)) {
+				codeMakerHole1 = black;
+				System.out.println("Black");
+			} else if (codeBreakerHole1.equalsIgnoreCase(secretCodeField2)){
+				codeMakerHole1 = white;
+				System.out.println("White");
+			} else if (codeBreakerHole1.equalsIgnoreCase(secretCodeField3)){
+				codeMakerHole1 = white;
+				System.out.println("White");
+			} else if (codeBreakerHole1.equalsIgnoreCase(secretCodeField4)){
+				codeMakerHole1 = white;
+				System.out.println("White");
+			} else{
+				codeMakerHole1 = empty;
+				System.out.println("Empty");
+			}
 		
 	}
 
