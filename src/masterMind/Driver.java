@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 public class Driver {
 	static String[] colors = { "Green", "Yellow", "Red", "Purple", "Orange", "Blue" };
+	static String[] codeMakerHole = { "", "", "", "" };
+	static String[] codeBreakerHole = { "", "", "", "" };
+	static String[] secretCodeField = { "", "", "", "" };
 
 	public static void main(String[] args) {
 		// ===========================================================================================================================================================================================================
@@ -22,26 +25,11 @@ public class Driver {
 		final String MAGENTA = "\u001b[35m";
 		final String WONTXT = "\u001b[43;1m";
 		// ===========================================================================================================================================================================================================
-		String codeBreakerHole1 = "";
-		String codeBreakerHole2 = "";
-		String codeBreakerHole3 = "";
-		String codeBreakerHole4 = "";
 
 		// CodeMaker-pins
 		String black = "Black";
 		String white = "White";
 		String empty = "Empty";
-
-		// CodeMaker-Row+Holes
-		String codeMakerHole1 = "";
-		String codeMakerHole2 = "";
-		String codeMakerHole3 = "";
-		String codeMakerHole4 = "";
-		// Secret-CodeField
-		String secretCodeField1 = "";
-		String secretCodeField2 = "";
-		String secretCodeField3 = "";
-		String secretCodeField4 = "";
 		// ===========================================================================================================================================================================================================
 		int currentRow = 0;
 		int winCondition = 0;
@@ -50,10 +38,14 @@ public class Driver {
 		// secret code is made
 		Random random = new Random();
 
-		secretCodeField1 = colors[random.nextInt(colors.length)];
-		secretCodeField2 = colors[random.nextInt(colors.length)];
-		secretCodeField3 = colors[random.nextInt(colors.length)];
-		secretCodeField4 = colors[random.nextInt(colors.length)];
+		secretCodeField[0] = colors[random.nextInt(colors.length)];
+		secretCodeField[1] = colors[random.nextInt(colors.length)];
+		secretCodeField[2] = colors[random.nextInt(colors.length)];
+		secretCodeField[3] = colors[random.nextInt(colors.length)];
+//		should look like (secretCodeField.length)
+		for (String secretCodeField : secretCodeField) {
+			System.out.println(secretCodeField);
+		}
 
 		// =========================================================================================================================================================================================================================================================
 		// Hole 1
@@ -61,157 +53,113 @@ public class Driver {
 			winCondition = 0;
 			System.out.println("Row " + currentRow);
 			// hole 1 input
-			System.out.println("Choose a color that you want to place in hole 1:");
+			int j = 0;
+			for (j = 0; j < codeBreakerHole.length; j++) {
+				System.out.println("Choose a color that you want to place in hole " +(j+1)+ ":");
 			boolean correct = false;
 			do {
-				codeBreakerHole1 = sc.next();
-				if (codeBreakerHole1.equalsIgnoreCase(colors[0]) || codeBreakerHole1.equalsIgnoreCase(colors[1])
-						|| codeBreakerHole1.equalsIgnoreCase(colors[2]) || codeBreakerHole1.equalsIgnoreCase(colors[3])
-						|| codeBreakerHole1.equalsIgnoreCase(colors[4])
-						|| codeBreakerHole1.equalsIgnoreCase(colors[5])) {
-					correct = true;
-				} else {
-					System.out.println(RED + "Invalid! " + RESET + "Choose a color that you want to place in hole 1:");
+				codeBreakerHole[j] = sc.next();
+				for (int i = 0; i < colors.length; i++) {
+					if (codeBreakerHole[j].equalsIgnoreCase(colors[i])) {
+						correct = true;
+					}
+				}
+				if (correct == false) {
+					System.out.println(RED + "Invalid! " + RESET + "Choose a color that you want to place in hole "+(j+1)+":");
 				}
 			} while (correct == false);
-
-			// hole 2
-			System.out.println("Choose a color that you want to place in hole 2:");
-			correct = false;
-			do {
-				codeBreakerHole2 = sc.next();
-				if (codeBreakerHole2.equalsIgnoreCase(colors[0]) || codeBreakerHole2.equalsIgnoreCase(colors[1])
-						|| codeBreakerHole2.equalsIgnoreCase(colors[2]) || codeBreakerHole2.equalsIgnoreCase(colors[3])
-						|| codeBreakerHole2.equalsIgnoreCase(colors[4])
-						|| codeBreakerHole2.equalsIgnoreCase(colors[5])) {
-					correct = true;
-				} else {
-					System.out.println(RED + "Invalid! " + RESET + "Choose a color that you want to place in hole 2:");
-				}
-			} while (correct == false);
-
-			// hole 3 input
-			System.out.println("Choose a color that you want to place in hole 3:");
-			correct = false;
-			do {
-				codeBreakerHole3 = sc.next();
-				if (codeBreakerHole3.equalsIgnoreCase(colors[0]) || codeBreakerHole3.equalsIgnoreCase(colors[1])
-						|| codeBreakerHole3.equalsIgnoreCase(colors[2]) || codeBreakerHole3.equalsIgnoreCase(colors[3])
-						|| codeBreakerHole3.equalsIgnoreCase(colors[4])
-						|| codeBreakerHole3.equalsIgnoreCase(colors[5])) {
-					correct = true;
-				} else {
-					System.out.println(RED + "Invalid! " + RESET + "Choose a color that you want to place in hole 3:");
-				}
-			} while (correct == false);
-
-			// hole 4 input
-			System.out.println("Choose a color that you want to place in hole 4:");
-			correct = false;
-			do {
-				codeBreakerHole4 = sc.next();
-				if (codeBreakerHole4.equalsIgnoreCase(colors[0]) || codeBreakerHole4.equalsIgnoreCase(colors[1])
-						|| codeBreakerHole4.equalsIgnoreCase(colors[2]) || codeBreakerHole4.equalsIgnoreCase(colors[3])
-						|| codeBreakerHole4.equalsIgnoreCase(colors[4])
-						|| codeBreakerHole4.equalsIgnoreCase(colors[5])) {
-					correct = true;
-				} else {
-					System.out.println(RED + "Invalid! " + RESET + "Choose a color that you want to place in hole 4:");
-				}
-			} while (correct == false);
-
-			// win check
-			// =======================================================================================================================================================================================================================
-			// Hole 1 check
-			if (codeBreakerHole1.equalsIgnoreCase(secretCodeField1)) {
-				codeMakerHole1 = BLACK + black + RESET;
-				winCondition++;
-			} else if (codeBreakerHole1.equalsIgnoreCase(secretCodeField2)) {
-				codeMakerHole1 = WHITE + white + RESET;
-			} else if (codeBreakerHole1.equalsIgnoreCase(secretCodeField3)) {
-				codeMakerHole1 = WHITE + white + RESET;
-			} else if (codeBreakerHole1.equalsIgnoreCase(secretCodeField4)) {
-				codeMakerHole1 = WHITE + white + RESET;
-			} else {
-				codeMakerHole1 = empty;
-			}
-
-			// Hole 2 check
-			if (codeBreakerHole2.equalsIgnoreCase(secretCodeField2)) {
-				codeMakerHole2 = BLACK + black + RESET;
-				winCondition++;
-			} else if (codeBreakerHole2.equalsIgnoreCase(secretCodeField1)) {
-				codeMakerHole2 = WHITE + white + RESET;
-			} else if (codeBreakerHole2.equalsIgnoreCase(secretCodeField3)) {
-				codeMakerHole2 = WHITE + white + RESET;
-			} else if (codeBreakerHole2.equalsIgnoreCase(secretCodeField4)) {
-				codeMakerHole2 = WHITE + white + RESET;
-			} else {
-				codeMakerHole2 = empty;
-			}
-
-			// Hole 3 check
-			if (codeBreakerHole3.equalsIgnoreCase(secretCodeField3)) {
-				codeMakerHole3 = BLACK + black + RESET;
-				winCondition++;
-			} else if (codeBreakerHole3.equalsIgnoreCase(secretCodeField1)) {
-				codeMakerHole3 = WHITE + white + RESET;
-			} else if (codeBreakerHole3.equalsIgnoreCase(secretCodeField2)) {
-				codeMakerHole3 = WHITE + white + RESET;
-			} else if (codeBreakerHole3.equalsIgnoreCase(secretCodeField4)) {
-				codeMakerHole3 = WHITE + white + RESET;
-			} else {
-				codeMakerHole3 = empty;
-			}
-
-			// Hole 4 check
-			if (codeBreakerHole4.equalsIgnoreCase(secretCodeField4)) {
-				codeMakerHole4 = BLACK + black + RESET;
-				winCondition++;
-			} else if (codeBreakerHole4.equalsIgnoreCase(secretCodeField1)) {
-				codeMakerHole4 = WHITE + white + RESET;
-			} else if (codeBreakerHole4.equalsIgnoreCase(secretCodeField2)) {
-				codeMakerHole4 = WHITE + white + RESET;
-			} else if (codeBreakerHole4.equalsIgnoreCase(secretCodeField3)) {
-				codeMakerHole4 = WHITE + white + RESET;
-			} else {
-				codeMakerHole4 = empty;
-			}
-
-			// =======================================================================================================================================================================================================================
-			// Output
-			System.out.println("\n=========================");
-			System.out.println(
-					"|" + codeMakerHole1 + "|" + codeMakerHole2 + "|" + codeMakerHole3 + "|" + codeMakerHole4 + "|");
-			System.out.println("=========================");
-			System.out.println("|" + codeBreakerHole1 + "|" + codeBreakerHole2 + "|" + codeBreakerHole3 + "|"
-					+ codeBreakerHole4 + "|");
-			System.out.println("=========================\n");
-
-			if (winCondition == 4) {
-				gamesWon = gamesWon + 1;
-				System.out.println(WONTXT + "W in the chat. YOU WON!" + RESET);
-				System.out.println("You guessed the code in " + currentRow + " rows");
-				System.out.println("\nDo you want to play again? Yes|No");
-				String awnser = sc.next();
-				if (awnser.equalsIgnoreCase("Yes")) {
-					System.out.println("Current wins: " + gamesWon + "\n");
-					currentRow = 0;
-				} else {
-					System.out.println("You won: " + gamesWon + " games!");
-					currentRow = 11;
-				}
-			} else if (currentRow == 10 && winCondition != 4) {
-				System.out.println("You lost. L bozo");
-			}
-
 		}
-		sc.close();
+
+		// win check
+		// =======================================================================================================================================================================================================================
+		// Hole 1 check
+		if (codeBreakerHole[0].equalsIgnoreCase(secretCodeField[0])) {
+			codeMakerHole[0] = BLACK + black + RESET;
+			winCondition++;
+		} else if (codeBreakerHole[0].equalsIgnoreCase(secretCodeField[1])) {
+			codeMakerHole[0] = WHITE + white + RESET;
+		} else if (codeBreakerHole[0].equalsIgnoreCase(secretCodeField[2])) {
+			codeMakerHole[0] = WHITE + white + RESET;
+		} else if (codeBreakerHole[0].equalsIgnoreCase(secretCodeField[3])) {
+			codeMakerHole[0] = WHITE + white + RESET;
+		} else {
+			codeMakerHole[0] = empty;
+		}
+
+		// Hole 2 check
+		if (codeBreakerHole[1].equalsIgnoreCase(secretCodeField[1])) {
+			codeMakerHole[1] = BLACK + black + RESET;
+			winCondition++;
+		} else if (codeBreakerHole[1].equalsIgnoreCase(secretCodeField[0])) {
+			codeMakerHole[1] = WHITE + white + RESET;
+		} else if (codeBreakerHole[1].equalsIgnoreCase(secretCodeField[2])) {
+			codeMakerHole[1] = WHITE + white + RESET;
+		} else if (codeBreakerHole[1].equalsIgnoreCase(secretCodeField[3])) {
+			codeMakerHole[1] = WHITE + white + RESET;
+		} else {
+			codeMakerHole[1] = empty;
+		}
+
+		// Hole 3 check
+		if (codeBreakerHole[2].equalsIgnoreCase(secretCodeField[2])) {
+			codeMakerHole[2] = BLACK + black + RESET;
+			winCondition++;
+		} else if (codeBreakerHole[2].equalsIgnoreCase(secretCodeField[0])) {
+			codeMakerHole[2] = WHITE + white + RESET;
+		} else if (codeBreakerHole[2].equalsIgnoreCase(secretCodeField[1])) {
+			codeMakerHole[2] = WHITE + white + RESET;
+		} else if (codeBreakerHole[2].equalsIgnoreCase(secretCodeField[3])) {
+			codeMakerHole[2] = WHITE + white + RESET;
+		} else {
+			codeMakerHole[2] = empty;
+		}
+
+		// Hole 4 check
+		if (codeBreakerHole[3].equalsIgnoreCase(secretCodeField[3])) {
+			codeMakerHole[3] = BLACK + black + RESET;
+			winCondition++;
+		} else if (codeBreakerHole[3].equalsIgnoreCase(secretCodeField[0])) {
+			codeMakerHole[3] = WHITE + white + RESET;
+		} else if (codeBreakerHole[3].equalsIgnoreCase(secretCodeField[1])) {
+			codeMakerHole[3] = WHITE + white + RESET;
+		} else if (codeBreakerHole[3].equalsIgnoreCase(secretCodeField[2])) {
+			codeMakerHole[3] = WHITE + white + RESET;
+		} else {
+			codeMakerHole[3] = empty;
+		}
+
+		// =======================================================================================================================================================================================================================
+		// Output
+		System.out.println("\n=========================");
+		System.out.println("|" + codeMakerHole[0] + "|" + codeMakerHole[1] + "|" + codeMakerHole[2] + "|"
+				+ codeMakerHole[3] + "|");
+		System.out.println("=========================");
+		System.out.println("|" + codeBreakerHole[0] + "|" + codeBreakerHole[1] + "|" + codeBreakerHole[2] + "|"
+				+ codeBreakerHole[3] + "|");
+		System.out.println("=========================\n");
+
+		if (winCondition == 4) {
+			gamesWon = gamesWon + 1;
+			System.out.println(WONTXT + "W in the chat. YOU WON!" + RESET);
+			System.out.println("You guessed the code in " + currentRow + " rows");
+			System.out.println("\nDo you want to play again? Yes|No");
+			String awnser = sc.next();
+			if (awnser.equalsIgnoreCase("Yes")) {
+				System.out.println("Current wins: " + gamesWon + "\n");
+				currentRow = 0;
+			} else {
+				System.out.println("You won: " + gamesWon + " games!");
+				currentRow = 11;
+			}
+		} else if (currentRow == 10 && winCondition != 4) {
+			System.out.println("You lost. L bozo");
+		}
+
+	}sc.close();
 
 	}
 
-	public static boolean arrayContains(String guess)
-        {
+	public static boolean arrayContains(String guess) {
 		return true;
-        }
+	}
 }
