@@ -27,14 +27,15 @@ public class Mastermind {
 		final String WHITE = "\u001B[37m";
 		final String BLACK = "\u001B[30m";
 		final String MAGENTA = "\u001b[35m";
+		final String FEEDBACKB = "\u001b[37;40;1m";
+		final String FEEDBACKW = "\u001b[47;1m";
 		final String WONTXT = "\u001b[43;1m";
 
 		// ===========================================================================================================================================================================================================
 
 		// CodeMaker-pins
-
-		String black = "Black";
-		String white = "White";
+		String black = FEEDBACKB + WHITE + "Black" + RESET;
+		String white = FEEDBACKW + BLACK + "White" + RESET;
 		String empty = "Empty";
 
 		// ===========================================================================================================================================================================================================
@@ -47,15 +48,15 @@ public class Mastermind {
 
 		// secret code is made
 		Random random = new Random();
+		secretCodeField[0] = colors[random.nextInt(colors.length)];
+		secretCodeField[1] = colors[random.nextInt(colors.length)];
+		secretCodeField[2] = colors[random.nextInt(colors.length)];
+		secretCodeField[3] = colors[random.nextInt(colors.length)];
 		// =========================================================================================================================================================================================================================================================
 
 		// Hole 1
 
 		for (currentRow = 1; currentRow <= 10; currentRow++) {
-			secretCodeField[0] = colors[random.nextInt(colors.length)];
-			secretCodeField[1] = colors[random.nextInt(colors.length)];
-			secretCodeField[2] = colors[random.nextInt(colors.length)];
-			secretCodeField[3] = colors[random.nextInt(colors.length)];
 //			should look like (secretCodeField.length)
 			for (String secretCodeField : secretCodeField) {
 				System.out.println(secretCodeField);
@@ -89,23 +90,23 @@ public class Mastermind {
 
 			// Hole 1 check
 			for (int i = 0; i < codeBreakerHole.length; i++) {
-				if (codeBreakerHole[i].equalsIgnoreCase(secretCodeField[i])) {
-					codeMakerHole[i] = BLACK + black + RESET;
-					winCondition++;
-				} else if (codeBreakerHole[i].equalsIgnoreCase(secretCodeField[i])) {
-					codeMakerHole[i] = WHITE + white + RESET;
-				} else if (codeBreakerHole[i].equalsIgnoreCase(secretCodeField[i])) {
-					codeMakerHole[i] = WHITE + white + RESET;
-				} else if (codeBreakerHole[i].equalsIgnoreCase(secretCodeField[i])) {
-					codeMakerHole[i] = WHITE + white + RESET;
-				} else {
-					codeMakerHole[i] = empty;
+
+				codeMakerHole[i] = empty;
+				for (int x = 0; x < codeBreakerHole.length; x++) {
+					if (codeBreakerHole[i].equalsIgnoreCase(secretCodeField[x])) {
+						codeMakerHole[i] = white;
+						if (codeBreakerHole[i].equalsIgnoreCase(secretCodeField[i])) {
+							codeMakerHole[i] = black;
+							winCondition++;
+						}
+					}
 				}
 			}
 
 			// =======================================================================================================================================================================================================================
 
 			// Output
+			System.out.println(winCondition);
 			System.out.println("\n=========================");
 			System.out.println("|" + codeMakerHole[0] + "|" + codeMakerHole[1] + "|" + codeMakerHole[2] + "|"
 					+ codeMakerHole[3] + "|");
@@ -113,15 +114,19 @@ public class Mastermind {
 			System.out.println("|" + codeBreakerHole[0] + "|" + codeBreakerHole[1] + "|" + codeBreakerHole[2] + "|"
 					+ codeBreakerHole[3] + "|");
 			System.out.println("=========================\n");
-			if (winCondition == 4) {
+			if (winCondition == codeMakerHole.length) {
 				gamesWon = gamesWon + 1;
-				System.out.println(WONTXT + "W in the chat. YOU WON!" + RESET);
+				System.out.println(WONTXT + BLACK + "W in the chat. YOU WON!" + RESET);
 				System.out.println("You guessed the code in " + currentRow + " rows");
 				System.out.println("\nDo you want to play again? Yes|No");
 				String awnser = sc.next();
 				if (awnser.equalsIgnoreCase("Yes")) {
 					System.out.println("Current wins: " + gamesWon + "\n");
 					currentRow = 0;
+					secretCodeField[0] = colors[random.nextInt(colors.length)];
+					secretCodeField[1] = colors[random.nextInt(colors.length)];
+					secretCodeField[2] = colors[random.nextInt(colors.length)];
+					secretCodeField[3] = colors[random.nextInt(colors.length)];
 				} else {
 					System.out.println("You won: " + gamesWon + " games!");
 					break;
@@ -132,11 +137,4 @@ public class Mastermind {
 		}
 		sc.close();
 	}
-
-	public static boolean arrayContains(String guess) {
-
-		return true;
-
-	}
-
 }
